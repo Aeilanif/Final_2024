@@ -39,16 +39,14 @@ $H_A$ : There are statistically significant difference in the data, meaning the 
 We will create a separate data set for each sub population. Then use the helper file cat~cat to create a bar chart and display the data. Then we will use xtabs for percentages on the data.Given that we are only testing two types, we will not need to use any loops to measure multiple variables. 
 
 ## Males
-## Graphical Results
+### Graphical Results
 
 ```{r}
 barchartGC(~infected + treatment,data=male)
 barchartGC(~infected + treatment,data=male, type="percent")
 ```
 
-This barchart is comparing the graphical results for the Males group data set. It compares the rates of contracting Covid 19 with vaccinations.The left side shows how people who have contracted Covid 19, meaning they tested positive, while the right side shows males who have not contracted Covid 19.
-
-Based on the data from the barchart, we can see that more than twice the amount of people taking the placebo contracted Covid 19. While those in the group who had taken the vaccine had a much lower number. Indicating the vaccine does have an effect.   
+According to the graph, there was a difference between 30% with Covid-19 and 70% with placebo among the guys who received the vaccination and those who received Covid-19. There was little difference among those who received the vaccinations and were "OK."
 
 ### Numerical Results
 
@@ -58,7 +56,7 @@ rowPerc(tableMale)
 colPerc(tableMale)
 ```
 
-The numerical results above confirm what the barchart data is indicating. Which is that people who have taken the vaccicne tend to contract Covid 19 half as much as the group that has taken only the placebo. The placebo group contracted Covid 19 at approximately 70% of the time. While the group with the vaccine contracted Covid 19 30% of the time. Based on the results, the vaccine seems to be effective on males in this group. 
+The table demonstrates that there was a 2 times difference among those who received the vaccinations and experienced Covid-19. 70% of those who took the placebo did not get the disease, compared to 30% of those who got the vaccination. There was not a noticeable distinction among those who received vaccinations and were OK. Effective on males in this group. 
 
 ### Inferential Results
 
@@ -70,19 +68,8 @@ maleFisher
 ```
 
 
-The Chi Squared test shows that the P value for the tested data is much smaller than the 0.05 limit. This very small number shows that there is a difference in the data. Also, the Chi Squared statistic is 55, which is larger than the degree of freedom. Thus, the odds of an unvaccinated man getting Covid 19 is 2.2 times greater than a man with the vaccine.   
+The p-value for male is 0.0000000000001098 the p-value is too small that's why we failed to reject the null hypothesis. The vaccine is not effective in preventing Covid-19 among males. Based on the Fisher's Exact test the P-value is 0.00000000000004631 meaning there is a difference in getting Covid-19 and being a male. If you are a males, your chances of acquiring Covid-19 are the same whether you take the placebo or Covid-19.
 
-### Confidence Interval
-
-```{r}
-oddsMale = maleFisher$estimate/(maleFisher$estimate+1)*100
-print(oddsMale)
-maleLow=(maleFisher$conf.int[1]/(maleFisher$conf.int[1]+1))*100
-maleHigh=(maleFisher$conf.int[2]/(maleFisher$conf.int[2]+1))*100
-cat("\n","Condifence interval for Males: ",maleLow," to ",maleHigh)
-```
-
-We can see from the results that the confidence interval is >50% with a normal vaccine threshold of >60%. This is enough data to confidently say this vaccine is effective at preventing Covid 19 for this group. 
 
 ## Females
 ### Graphical Results
@@ -92,7 +79,7 @@ barchartGC(~infected + treatment,data=female)
 barchartGC(~infected + treatment,data=female, type="percent")
 ```
 
-The above barchart compares the graphical results of only the Female group data collected. The comparison shows rates of contracting Covid 19 compared to whether or not the group has the vaccine. The left side shows females who contracted Covid 19 while the right shows females that have not. The barchart also shows that those females that took a placebo are a third more likely contracted Covid 19 than females who have taken the vaccine. 
+According to the graph, among those who received Covid-19, there was a difference between 40% Covid-19 and 60% placebo among the females who received the vaccination. The Female who received the vaccination and were OK showed no noticeable difference.
 
 
 ### Numerical Results
@@ -104,7 +91,7 @@ colPerc(tableFemale)
 ```
 
 
-The numerical results above confirms the suggestion of the graphical data that those who took the placebo contracted Covid 19 approximately 60% of the time. While those females who are have taken the vaccine are contracted Covid 19 40% of the time. Thus showing that the vaccine is generally effective. However, it is slightly less effective than the male groups.
+According to the table, there was a 20% difference in vaccination rates among females who received the Covid-19 vaccine. The female who recieve the vaccine 40% and the placebo 60%. There is no difference among those who received the vaccination.
 
 ### Inferential Results
 
@@ -115,19 +102,7 @@ femaleFisher <- fisher.test(tableFemale)
 femaleFisher
 ```
 
-The Chi Squared test shows that the P value for the data is smaller than the 0.05 limit.Showing that there is statistical significance.The Chi Squared statistic 13, which is also higher than the degrees of freedom for this group's results. Thus, the odds of an unvaccinated female contracting Covid 19 is 1.5 times higher than a female that has taken the vaccine contracting Covid 19.   
-
-# Confidence Interval
-
-```{r}
-oddsFemale = femaleFisher$estimate/(femaleFisher$estimate +1)*100
-print(oddsFemale)
-femaleLow=(femaleFisher$conf.int[1]/(femaleFisher$conf.int[1]+1))*100
-femaleHigh=(femaleFisher$conf.int[2]/(femaleFisher$conf.int[2]+1))*100
-cat("\n","Condifence interval for Females: ",femaleLow," to ",femaleHigh)
-```
-
-As we can see from the results, we again see that the confidence interval is >50% and includes the 60% threshold. Showing that the vaccine is effective. However, its less effective than we saw in the male group results.
+The Chi-squared p-value is 0.002732 the p-value is too small, so the vaccine is not effective in preventing covid-19 among females. Based on the Fisher's Exact test the p-value is 0.0002162. We failed to reject the null hypothesis, because the p-value is too small.
 
 
 ## LGBTQ
@@ -138,9 +113,7 @@ barchartGC(~infected + treatment,data=lgbtq)
 barchartGC(~infected + treatment,data=lgbtq, type="percent")
 ```
 
-The above barchart is comparing the graphical results of placebo and vaccine data for only people from the LGBTQ group.Comparing whether or not the vaccine had any effect on the odds of catching Covid 19. The left side of the barchart shows people who contracted Covid 19 while taking the placebo. While the right side shows the people who have taken the vaccine and contracted Covid 19. As we see on the barchart, people who have taken the vaccine appear to be 5 times more likely to contract Covid 19 than those who took a placebo. 
-
-
+According to the graph, among individuals who received the vaccination and had Covid-19, there was an 80% Covid-19 compared. 20% placebo difference. There was no apparent variance among those who received vaccinations and were OK.
 
 ### Numerical Results
 
@@ -150,11 +123,7 @@ rowPerc(tableLGBTQ)
 colPerc(tableLGBTQ)
 ```
 
-
-
-The numerical results compound on what the graphical results were telling us, the placebo group contracted Covid approximately 15% of the time where the vaccinated group contracted Covid 85% of the time. We can see that the vaccine is not effective in this testing scenario, in fact it is inversely effective and seems to put this group at a higher risk of contracting Covid 19.
-
-
+According to the table, there was a 40% difference in individuals who contracted Covid-19 among those who received the vaccination. About 80% of those who received the placebo had a 20% chance of not becoming sick. There was no discernible difference among those who received vaccinations and were OK.
 
 ### Inferential Results
 
@@ -165,27 +134,41 @@ lgbtqFisher <- fisher.test(tableLGBTQ)
 lgbtqFisher
 ```
 
-
-The p-value of is much smaller than the suggested 0.05 threshold. Showing that this reverse effect of the vaccine is indeed real. The Chi-Squared statistic, 29, supports this as it is larger than the degrees of freedom. The odds for an unvaccinated LGBTQ person getting Covid-19 compared to a vaccinated one are about 1:5. 
-
-
-
-### Confidence Interval
-
-```{r}
-oddsLGBTQ = lgbtqFisher$estimate/(lgbtqFisher$estimate +1)*100
-print(oddsLGBTQ)
-lgbtqLow=(lgbtqFisher$conf.int[1]/(lgbtqFisher$conf.int[1]+1))*100
-lgbtqHigh=(lgbtqFisher$conf.int[2]/(lgbtqFisher$conf.int[2]+1))*100
-cat("\n","Condifence interval for LGBTQ: ",lgbtqLow," to ",lgbtqHigh)
-```
-
-We see from the results, the confidence interval is 7-26%. This is far lower than 50%. Thus, we can say that this is not a very good vaccine.
-
-
+The Chi-squared value is 0.00000006668 is too small, so vaccine is not effective in preventing spread of vaccine among LGBTQ. Based on the Fisher's Exact test P-value are 0.00000001029. We fail to reject the null hypothesis. If you take the placebo or covid you are in the same likely hood of receiving covid if you are a LGBTQ.
 
 
 ## Druggies
+### Graphical Results
 
+```{r}
+barchartGC(~infected + treatment,data=drugUser)
+barchartGC(~infected + treatment,data=drugUser, type="percent")
+```
+
+The graph shows among those who had Covid-19, the Druggies who did get vaccinated there was a difference between 88% with Covid-19 and about 10% with placebo. 
+
+
+### Numerical Results
+
+```{r}
+tableDrug <- xtabs(~infected + treatment, data=drugUser)
+rowPerc(tableDrug)
+colPerc(tableDrug)
+```
+
+The table shows that among the Druggies who took the vaccine that got Covid-19 there was a difference. The Druggies that took the placebo with 12% chance of not being infected and 88% for the Druggies. Among the people that were OK and took the vaccine there was no significant diligence.
+
+### Inferential Results
+
+```{r}
+chisq.test(tableDrug)
+chisqtestGC(tableDrug)
+drugFisher <- fisher.test(tableDrug)
+drugFisher
+```
+
+The Chi-squared value is p-value 0.000000002842 is too small, so vaccine is not effective in preventing spread of Covid-19 among other people. Based on the Fisher's Exact test the p-value is 0.000000000232. We fail to reject the null hypothesis. The information provided shows that the vaccine does not prevent Covid-19.
 
 # Overall Results and Conclusions
+
+We aimed for to know if Covid-19 was successfully prevented by the vaccinations in the male subgroup. Our findings ultimately lead us to draw the conclusion that the vaccination is ineffective in protecting males against COVID-19. We fail to reject the null hypothesis for this subgroup. We fail to reject the null hypothesis since the vaccination was unable to prevent Covid-19 in the subgroup of females when the same question was presented. The results of our research show that the vaccination did not successfully prevent Covid-19, and since the LGBTQ population was also included in the study, we are fail to reject the null hypothesis. Like as well in the drug users asked the same questions, and because our findings show that the vaccinations did not prevent Covid-19, we failed to reject the null hypothesis.
