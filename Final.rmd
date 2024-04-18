@@ -39,7 +39,6 @@ $H_A$ : There are statistically significant difference in the data, meaning the 
 We will create a separate data set for each sub population. Then use the helper file cat~cat to create a bar chart and display the data. Then we will use xtabs for percentages on the data.Given that we are only testing two types, we will not need to use any loops to measure multiple variables. 
 
 ## Males
-
 ## Graphical Results
 
 ```{r}
@@ -86,6 +85,14 @@ cat("\n","Condifence interval for Males: ",maleLow," to ",maleHigh)
 We can see from the results that the confidence interval is >50% with a normal vaccine threshold of >60%. This is enough data to confidently say this vaccine is effective at preventing Covid 19 for this group. 
 
 ## Females
+### Graphical Results
+
+```{r}
+barchartGC(~infected + treatment,data=female)
+barchartGC(~infected + treatment,data=female, type="percent")
+```
+
+The above barchart compares the graphical results of only the Female group data collected. The comparison shows rates of contracting Covid 19 compared to whether or not the group has the vaccine. The left side shows females who contracted Covid 19 while the right shows females that have not. The barchart also shows that those females that took a placebo are a third more likely contracted Covid 19 than females who have taken the vaccine. 
 
 
 ## LGBTQ
