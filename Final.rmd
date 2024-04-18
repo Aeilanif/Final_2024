@@ -95,6 +95,41 @@ barchartGC(~infected + treatment,data=female, type="percent")
 The above barchart compares the graphical results of only the Female group data collected. The comparison shows rates of contracting Covid 19 compared to whether or not the group has the vaccine. The left side shows females who contracted Covid 19 while the right shows females that have not. The barchart also shows that those females that took a placebo are a third more likely contracted Covid 19 than females who have taken the vaccine. 
 
 
+### Numerical Results
+
+```{r}
+tableFemale <- xtabs(~infected + treatment, data=female)
+rowPerc(tableFemale)
+colPerc(tableFemale)
+```
+
+
+The numerical results above confirms the suggestion of the graphical data that those who took the placebo contracted Covid 19 approximately 60% of the time. While those females who are have taken the vaccine are contracted Covid 19 40% of the time. Thus showing that the vaccine is generally effective. However, it is slightly less effective than the male groups.
+
+### Inferential Results
+
+```{r}
+chisq.test(tableFemale)
+chisqtestGC(tableFemale)
+femaleFisher <- fisher.test(tableFemale)
+femaleFisher
+```
+
+The Chi Squared test shows that the P value for the data is smaller than the 0.05 limit.Showing that there is statistical significance.The Chi Squared statistic 13, which is also higher than the degrees of freedom for this group's results. Thus, the odds of an unvaccinated female contracting Covid 19 is 1.5 times higher than a female that has taken the vaccine contracting Covid 19.   
+
+# Confidence Interval
+
+```{r}
+oddsFemale = femaleFisher$estimate/(femaleFisher$estimate +1)*100
+print(oddsFemale)
+femaleLow=(femaleFisher$conf.int[1]/(femaleFisher$conf.int[1]+1))*100
+femaleHigh=(femaleFisher$conf.int[2]/(femaleFisher$conf.int[2]+1))*100
+cat("\n","Condifence interval for Females: ",femaleLow," to ",femaleHigh)
+```
+
+As we can see from the results, we again see that the confidence interval is >50% and includes the 60% threshold. Showing that the vaccine is effective. However, its less effective than we saw in the male group results.
+
+
 ## LGBTQ
 
 
