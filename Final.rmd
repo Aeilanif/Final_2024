@@ -49,6 +49,16 @@ This barchart is comparing the graphical results for the Males group data set. I
 
 Based on the data from the barchart, we can see that more than twice the amount of people taking the placebo contracted Covid 19. While those in the group who had taken the vaccine had a much lower number. Indicating the vaccine does have an effect.   
 
+### Numerical Results
+
+```{r}
+tableMale <- xtabs(~infected + treatment, data=male)
+rowPerc(tableMale)
+colPerc(tableMale)
+```
+
+The numerical results above confirm what the barchart data is indicating. Which is that people who have taken the vaccicne tend to contract Covid 19 half as much as the group that has taken only the placebo. The placebo group contracted Covid 19 at approximately 70% of the time. While the group with the vaccine contracted Covid 19 30% of the time. Based on the results, the vaccine seems to be effective on males in this group. 
+
 
 ## Males
 
