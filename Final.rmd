@@ -38,6 +38,8 @@ $H_A$ : There are statistically significant difference in the data, meaning the 
 
 We will create a separate data set for each sub population. Then use the helper file cat~cat to create a bar chart and display the data. Then we will use xtabs for percentages on the data.Given that we are only testing two types, we will not need to use any loops to measure multiple variables. 
 
+## Males
+
 ## Graphical Results
 
 ```{r}
@@ -59,9 +61,29 @@ colPerc(tableMale)
 
 The numerical results above confirm what the barchart data is indicating. Which is that people who have taken the vaccicne tend to contract Covid 19 half as much as the group that has taken only the placebo. The placebo group contracted Covid 19 at approximately 70% of the time. While the group with the vaccine contracted Covid 19 30% of the time. Based on the results, the vaccine seems to be effective on males in this group. 
 
+### Inferential Results
 
-## Males
+```{r}
+chisq.test(tableMale)
+chisqtestGC(tableMale)
+maleFisher <- fisher.test(tableMale)
+maleFisher
+```
 
+
+The Chi Squared test shows that the P value for the tested data is much smaller than the 0.05 limit. This very small number shows that there is a difference in the data. Also, the Chi Squared statistic is 55, which is larger than the degree of freedom. Thus, the odds of an unvaccinated man getting Covid 19 is 2.2 times greater than a man with the vaccine.   
+
+### Confidence Interval
+
+```{r}
+oddsMale = maleFisher$estimate/(maleFisher$estimate+1)*100
+print(oddsMale)
+maleLow=(maleFisher$conf.int[1]/(maleFisher$conf.int[1]+1))*100
+maleHigh=(maleFisher$conf.int[2]/(maleFisher$conf.int[2]+1))*100
+cat("\n","Condifence interval for Males: ",maleLow," to ",maleHigh)
+```
+
+We can see from the results that the confidence interval is >50% with a normal vaccine threshold of >60%. This is enough data to confidently say this vaccine is effective at preventing Covid 19 for this group. 
 
 ## Females
 
