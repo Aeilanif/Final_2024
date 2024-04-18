@@ -1,12 +1,12 @@
 ---
 title: "Covid91 vaccine study Final2023"
-author: "Put your name here!"
+author: "Aeilani Felix"
 output: 
   html_document:
     number_sections: true
     toc: true
     toc_depth: 5
-date: "`r Sys.Date()`" 
+date: "Spring 2024" 
 ---
 
 ```{r include=FALSE,echo=FALSE}
@@ -18,11 +18,37 @@ FinalDat <-read.csv(file="final.csv",header=TRUE)
 FinalData <- FinalDat  %>% select(-one_of("X"))
 FinalData <- FinalData %>%
 mutate(across(where(is.character), as.factor))
+
+male = filter(FinalData, sex =="M")
+female = filter(FinalData, sex =="F")
+lgbtq = filter(FinalData, LGBTQ =="gay")
+drugUser = filter(FinalData, DrugUser =="yes")
+
 ```
 
 # Introduction
 
 A new  preventative vaccine (covid921) is under test in clinical trials. Given the nature of this vaccine it is suspected that the drug may exhibit different effectiveness across the variety of subpopulations tracked. Consider population subgroups by gender( guys and gals), drug use, and sexual orientation. Write a complete report that separately considers this drug for each subgroup and your recommendations as to whether people in the subgroup should take the vaccine. Structure your report in four sections each devoted to one of the four subgroups, use null and alternative hypothesis statements and correct statistical verbage when referencing p-values in conclusions.
+
+$H_0$ : There are NO statistically significant difference in the data, meaning the vaccine and placebo are equally as effective.
+
+$H_A$ : There are statistically significant difference in the data, meaning the vaccine and placebo are NOT equally as effective.
+
+# Methods
+
+We will create a separate data set for each sub population. Then use the helper file cat~cat to create a bar chart and display the data. Then we will use xtabs for percentages on the data.Given that we are only testing two types, we will not need to use any loops to measure multiple variables. 
+
+## Graphical Results
+
+```{r}
+barchartGC(~infected + treatment,data=male)
+barchartGC(~infected + treatment,data=male, type="percent")
+```
+
+This barchart is comparing the graphical results for the Males group data set. It compares the rates of contracting Covid 19 with vaccinations.The left side shows how people who have contracted Covid 19, meaning they tested positive, while the right side shows males who have not contracted Covid 19.
+
+Based on the data from the barchart, we can see that more than twice the amount of people taking the placebo contracted Covid 19. While those in the group who had taken the vaccine had a much lower number. Indicating the vaccine does have an effect.   
+
 
 ## Males
 
