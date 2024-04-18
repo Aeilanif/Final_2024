@@ -131,6 +131,57 @@ As we can see from the results, we again see that the confidence interval is >50
 
 
 ## LGBTQ
+### Graphical Results
+
+```{r}
+barchartGC(~infected + treatment,data=lgbtq)
+barchartGC(~infected + treatment,data=lgbtq, type="percent")
+```
+
+The above barchart is comparing the graphical results of placebo and vaccine data for only people from the LGBTQ group.Comparing whether or not the vaccine had any effect on the odds of catching Covid 19. The left side of the barchart shows people who contracted Covid 19 while taking the placebo. While the right side shows the people who have taken the vaccine and contracted Covid 19. As we see on the barchart, people who have taken the vaccine appear to be 5 times more likely to contract Covid 19 than those who took a placebo. 
+
+
+
+### Numerical Results
+
+```{r}
+tableLGBTQ <- xtabs(~infected + treatment, data=lgbtq)
+rowPerc(tableLGBTQ)
+colPerc(tableLGBTQ)
+```
+
+
+
+The numerical results compound on what the graphical results were telling us, the placebo group contracted Covid approximately 15% of the time where the vaccinated group contracted Covid 85% of the time. We can see that the vaccine is not effective in this testing scenario, in fact it is inversely effective and seems to put this group at a higher risk of contracting Covid 19.
+
+
+
+### Inferential Results
+
+```{r}
+chisq.test(tableLGBTQ)
+chisqtestGC(tableLGBTQ)
+lgbtqFisher <- fisher.test(tableLGBTQ)
+lgbtqFisher
+```
+
+
+The p-value of is much smaller than the suggested 0.05 threshold. Showing that this reverse effect of the vaccine is indeed real. The Chi-Squared statistic, 29, supports this as it is larger than the degrees of freedom. The odds for an unvaccinated LGBTQ person getting Covid-19 compared to a vaccinated one are about 1:5. 
+
+
+
+### Confidence Interval
+
+```{r}
+oddsLGBTQ = lgbtqFisher$estimate/(lgbtqFisher$estimate +1)*100
+print(oddsLGBTQ)
+lgbtqLow=(lgbtqFisher$conf.int[1]/(lgbtqFisher$conf.int[1]+1))*100
+lgbtqHigh=(lgbtqFisher$conf.int[2]/(lgbtqFisher$conf.int[2]+1))*100
+cat("\n","Condifence interval for LGBTQ: ",lgbtqLow," to ",lgbtqHigh)
+```
+
+We see from the results, the confidence interval is 7-26%. This is far lower than 50%. Thus, we can say that this is not a very good vaccine.
+
 
 
 
